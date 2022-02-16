@@ -1,4 +1,4 @@
-package com._.examples.kotlinflow
+package com.flow.examples.kotlinflow
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

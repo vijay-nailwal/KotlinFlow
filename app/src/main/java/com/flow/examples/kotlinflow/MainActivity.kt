@@ -1,4 +1,4 @@
-package com._.examples.kotlinflow
+package com.flow.examples.kotlinflow
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

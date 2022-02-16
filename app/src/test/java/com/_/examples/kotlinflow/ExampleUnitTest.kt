@@ -1,4 +1,4 @@
-package com.verizon.adop.kotlinflow
+package com._.examples.kotlinflow
 
 import org.junit.Test
 

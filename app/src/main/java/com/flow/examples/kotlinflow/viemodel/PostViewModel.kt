@@ -4,17 +4,18 @@ package com.flow.examples.kotlinflow.viemodel
 /**
  * Created by Vijay on 17-02-2022.
  */
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flow.examples.kotlinflow.model.PostModel
 import com.flow.examples.kotlinflow.repository.PostRepository
+import com.flow.examples.util.LogUtil
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
+class PostViewModel(private val postRepository: PostRepository)
+    : ViewModel() {
 
     val postData: MutableLiveData<List<PostModel>> = MutableLiveData()
 
@@ -23,7 +24,7 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
         viewModelScope.launch {
             postRepository.getPost()
                 .catch { e ->
-                    Log.d("main", "getPost: ${e.message}")
+                    LogUtil.d(e.message.toString())
                 }
                 .collect { postData1 ->
                     postData.value = postData1

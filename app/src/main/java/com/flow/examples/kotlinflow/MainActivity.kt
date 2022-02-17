@@ -1,41 +1,33 @@
 package com.flow.examples.kotlinflow
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.flow.examples.kotlinflow.databinding.ActivityMainBinding
-import com.flow.examples.kotlinflow.viemodel.MainViewModel
-import kotlinx.coroutines.flow.collect
+import com.flow.examples.util.ConnectivityLiveData
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var connectivityLiveData: ConnectivityLiveData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        layoutBinding()
+        internetConnection()
+    }
+
+    private fun layoutBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        init()
-        initCountObserver()
     }
 
-    private fun initCountObserver() {
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.counterState.collect {
-                binding.result.text = it.toString()
+    private fun internetConnection() {
+        connectivityLiveData = ConnectivityLiveData(application)
+        connectivityLiveData.observe(this) { isAvailable ->
+            when (isAvailable) {
+                true -> binding.textView.text = "Connected with Internet"
+                false -> binding.textView.text = "No Network"
             }
-        }
-    }
-
-    private fun init() {
-        binding.increment.setOnClickListener {
-            mainViewModel.incrementCount()
-        }
-        binding.decrement.setOnClickListener {
-            mainViewModel.decrementCount()
         }
     }
 }
